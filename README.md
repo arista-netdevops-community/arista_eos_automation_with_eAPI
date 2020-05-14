@@ -131,7 +131,7 @@ vlan 30 name is thirty
 
 #### Configuring EOS devices using a file 
 
-We will use the file[commands.txt](commands.txt). 
+We will use the file [commands.txt](commands.txt). 
 
 ```
 >>> f = open("commands.txt", "r")
