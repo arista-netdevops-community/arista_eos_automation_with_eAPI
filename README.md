@@ -101,19 +101,7 @@ conf = ["configure", "vlan 100", "name test"]
 conf_vlan_100 = switch.runCmds(version=1,cmds=conf)
 result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
 result[0]['vlans']['100']['name']
-
 ```
-
-#### Configuring EOS using commands auto completion 
-
-```
-conf = ["conf", "vla 101", "nam whatever"] 
-conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
-result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
-result[0]['vlans']['101']['name']
-```
-
-#### configuring EOS devices using more commands 
 
 ```
 conf = ["configure", "vlan 10", "name ten", "vlan 20", "name twenty"] 
@@ -121,6 +109,15 @@ conf_vlans = switch.runCmds(version=1,cmds=conf)
 result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
 for key,value in result[0]['vlans'].items(): 
    print("vlan " + key + " name is " + value['name'])
+```
+
+#### Configuring EOS using auto completion 
+
+```
+conf = ["conf", "vla 101", "nam whatever"] 
+conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
+result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
+result[0]['vlans']['101']['name']
 ```
 
 #### configuring EOS devices using a file 
