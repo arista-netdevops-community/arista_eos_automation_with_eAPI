@@ -28,7 +28,7 @@ pip freeze | grep jsonrpc
 jsonrpclib-pelix==0.4.1
 ```
 
-## EOS automation 
+## EOS automation using JSON-RPC
 
 ```
 >>> from jsonrpclib import Server
@@ -42,7 +42,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> switch = Server(url)
 ```
 
-### EOS automation using the `runCmds` method
+### Using the `runCmds` method
 
 #### Running an EOS `show command` 
 
@@ -137,7 +137,7 @@ for key,value in result[0]['vlans'].items():
    print("vlan " + key + " name is " + value['name'])
 ```
 
-### EOS automation using the `getCommandCompletions` method
+### Using the `getCommandCompletions` method
 ```
 from jsonrpclib import Server
 username = "arista"
