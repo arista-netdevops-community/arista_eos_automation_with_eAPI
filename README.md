@@ -42,9 +42,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> switch = Server(url)
 ```
 
-#### EOS `show commands` 
-
-##### without auto completion
+#### Running an EOS `show command` 
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["show version"])
@@ -71,7 +69,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-##### using auto completion
+#### Running an EOS `show command` using auto completion
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["sh ver"], format='json', autoComplete=True)
@@ -82,7 +80,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-##### using several commands 
+#### Running several EOS `show commands` 
 
 ```
 >>> commands_list = ["sh env temp", "sh ver"]
@@ -94,9 +92,8 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-#### EOS configuration changes 
+#### Configuring EOS 
 
-##### without auto completion
 ```
 conf = ["configure", "vlan 100", "name test"] 
 conf_vlan_100 = switch.runCmds(version=1,cmds=conf)
@@ -104,22 +101,28 @@ result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=Tr
 result[0]['vlans']['100']['name']
 
 ```
-##### using auto completion 
+
+#### Configuring EOS using commands auto completion 
+
 ```
 conf = ["conf", "vla 101", "nam whatever"] 
 conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
 result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
 result[0]['vlans']['101']['name']
 ```
-##### configuring EOS devices using more commands 
+
+#### configuring EOS devices using more commands 
+
 ```
-conf = ["conf", "vlan 10", "name ten", "vlan 20", "name twenty"] 
-conf_vlans = switch.runCmds(version=1,cmds=conf, autoComplete=True)
+conf = ["configure", "vlan 10", "name ten", "vlan 20", "name twenty"] 
+conf_vlans = switch.runCmds(version=1,cmds=conf)
 result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
 for key,value in result[0]['vlans'].items(): 
    print("vlan " + key + " name is " + value['name'])
 ```
-##### configuring EOS devices using a file 
+
+#### configuring EOS devices using a file 
+
 ```
 f = open("commands.txt", "r")
 conf = f.read().splitlines()
