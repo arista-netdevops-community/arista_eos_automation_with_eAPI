@@ -42,7 +42,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> switch = Server(url)
 ```
 
-### Using the `runCmds` method
+### Using `runCmds` method
 
 #### Running an EOS `show command` 
 
@@ -97,65 +97,88 @@ http://arista:arista@10.83.28.203/command-api
 #### Configuring EOS 
 
 ```
-conf = ["configure", "vlan 100", "name test"] 
-conf_vlan_100 = switch.runCmds(version=1,cmds=conf)
-result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
-result[0]['vlans']['100']['name']
+>>> conf = ["configure", "vlan 10", "name ten"]
+>>> conf_vlan_10 = switch.runCmds(version=1,cmds=conf)
+>>> result=switch.runCmds(version=1,cmds=["show vlan"])
+>>> result[0]['vlans']['10']['name']
+'ten'
+>>> 
 ```
-
 ```
-conf = ["configure", "vlan 10", "name ten", "vlan 20", "name twenty"] 
-conf_vlans = switch.runCmds(version=1,cmds=conf)
-result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
-for key,value in result[0]['vlans'].items(): 
-   print("vlan " + key + " name is " + value['name'])
+>>> conf = ["configure", "vlan 20", "name twenty", "vlan 30", "name thirty"] 
+>>> conf_vlans = switch.runCmds(version=1,cmds=conf)
+>>> result=switch.runCmds(version=1,cmds=["show vlan"], format='json')
+>>> for key,value in result[0]['vlans'].items(): 
+...    print("vlan " + key + " name is " + value['name'])
+... 
+vlan 1 name is default
+vlan 10 name is ten
+vlan 20 name is twenty
+vlan 30 name is thirty
+>>> 
 ```
 
 #### Configuring EOS using auto completion 
 
 ```
-conf = ["conf", "vla 101", "nam whatever"] 
-conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
-result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
-result[0]['vlans']['101']['name']
+>>> conf = ["conf", "vla 40", "nam forty"] 
+>>> conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
+>>> result=switch.runCmds(version=1,cmds=["sh vla"], format='json', autoComplete=True)
+>>> result[0]['vlans']['40']['name']
+'forty'
+>>> 
 ```
 
 #### configuring EOS devices using a file 
 
 ```
-f = open("commands.txt", "r")
-conf = f.read().splitlines()
-f.close() 
-conf
-
-conf_vlans = switch.runCmds(version=1,cmds=conf, autoComplete=True)
-result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
-for key,value in result[0]['vlans'].items(): 
-   print("vlan " + key + " name is " + value['name'])
+>>> f = open("commands.txt", "r")
+>>> conf = f.read().splitlines()
+>>> f.close() 
+>>> conf
+['conf', 'vlan 50', 'name fifty', 'vlan 60 ', 'name sixty']
+>>> 
+>>> conf_vlans = switch.runCmds(version=1,cmds=conf, autoComplete=True)
+>>> result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
+>>> for key,value in result[0]['vlans'].items(): 
+...    print("vlan " + key + " name is " + value['name'])
+... 
+vlan 1 name is default
+vlan 10 name is ten
+vlan 60 name is sixty
+vlan 20 name is twenty
+vlan 30 name is thirty
+vlan 50 name is fifty
+vlan 40 name is forty
+>>> 
 ```
 
 ### Using the `getCommandCompletions` method
+
 ```
-from jsonrpclib import Server
-username = "arista"
-password = "arista"
-ip = "10.83.28.203"
-url = "http://" + username + ":" + password + "@" + ip + "/command-api"
-switch = Server(url)
-
-command_to_complete = "sh"
-command_completed = switch.getCommandCompletions(command_to_complete) 
-command_completed
-command_completed['completions']
-print(command_completed['completions'].keys())
-
-for item in command_completed['completions']: 
-    print(item)
-
-for key,value in command_completed['completions'].items(): 
-     print(key)
-
-command_to_complete = "sh ver"
-command_completed=switch.getCommandCompletions(command_to_complete) 
-command_completed['completions']
+>>> command_to_complete = "sh"
+>>> command_completed = switch.getCommandCompletions(command_to_complete) 
+>>> command_completed
+{'complete': False, 'completions': {'show': 'Display details of switch operation'}, 'errors': {}}
+>>> command_completed['completions']
+{'show': 'Display details of switch operation'}
+>>> print(command_completed['completions'].keys())
+dict_keys(['show'])
+>>> 
+>>> for item in command_completed['completions']: 
+...     print(item)
+... 
+show
+>>> for key,value in command_completed['completions'].items(): 
+...      print(key)
+... 
+show
+>>> 
+```
+```
+>>> command_to_complete = "sh ver"
+>>> command_completed=switch.getCommandCompletions(command_to_complete) 
+>>> command_completed['completions']
+{'version': 'Software and hardware versions'}
+>>> 
 ```
