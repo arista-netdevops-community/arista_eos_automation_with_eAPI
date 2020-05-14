@@ -1,10 +1,10 @@
-### About this repo 
+## About this repo 
 
 This repo has basic examples of Arista EOS automation using JSON-RPC
 
-### Requirements 
+## Requirements 
 
-#### Requirements on the EOS devices
+### Requirements on the EOS devices
 
 ```
 s7152#show running-config section management api
@@ -14,7 +14,7 @@ management api http-commands
 s7152#
 ```
 
-#### Requirements on your laptop 
+### Requirements on your laptop 
 
 ```
 python -V
@@ -28,7 +28,7 @@ pip freeze | grep jsonrpc
 jsonrpclib-pelix==0.4.1
 ```
 
-### EOS automation using the `runCmds` method
+## EOS automation 
 
 ```
 >>> from jsonrpclib import Server
@@ -41,6 +41,8 @@ jsonrpclib-pelix==0.4.1
 http://arista:arista@10.83.28.203/command-api
 >>> switch = Server(url)
 ```
+
+### EOS automation using the `runCmds` method
 
 #### Running an EOS `show command` 
 
