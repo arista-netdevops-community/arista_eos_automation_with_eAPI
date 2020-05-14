@@ -1,6 +1,6 @@
 ## About this repo 
 
-This repo has basic examples of Arista EOS automation using JSON-RPC
+This repo has basic examples of Arista EOS automation using eAPI
 
 ## Requirements 
 
