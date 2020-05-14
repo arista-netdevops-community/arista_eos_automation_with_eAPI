@@ -42,7 +42,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> switch = Server(url)
 ```
 
-### Using `runCmds` method
+### The `runCmds` method
 
 #### Running an EOS `show command` 
 
@@ -129,7 +129,9 @@ vlan 30 name is thirty
 >>> 
 ```
 
-#### configuring EOS devices using a file 
+#### Configuring EOS devices using a file 
+
+We will use the file[commands.txt](commands.txt). 
 
 ```
 >>> f = open("commands.txt", "r")
@@ -153,15 +155,18 @@ vlan 40 name is forty
 >>> 
 ```
 
-### Using the `getCommandCompletions` method
+### The `getCommandCompletions` method
 
 ```
 >>> command_to_complete = "sh"
 >>> command_completed = switch.getCommandCompletions(command_to_complete) 
+>>> 
 >>> command_completed
 {'complete': False, 'completions': {'show': 'Display details of switch operation'}, 'errors': {}}
+>>> 
 >>> command_completed['completions']
 {'show': 'Display details of switch operation'}
+>>> 
 >>> print(command_completed['completions'].keys())
 dict_keys(['show'])
 >>> 
@@ -169,6 +174,7 @@ dict_keys(['show'])
 ...     print(item)
 ... 
 show
+>>> 
 >>> for key,value in command_completed['completions'].items(): 
 ...      print(key)
 ... 
