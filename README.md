@@ -8,7 +8,7 @@
 [Basic eAPI tutorial](#basic-eapi-tutorial)  
 [Advanced eAPI demo](#advanced-eapi-demo)  
 
-## About this repo 
+## About this repository 
 
 This repo has basic examples of Arista EOS automation using eAPI.  
 
