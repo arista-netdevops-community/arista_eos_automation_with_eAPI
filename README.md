@@ -1,6 +1,21 @@
+## Table of content
+[About this repository](##about-this-repository)  
+[About eAPI](##about-eapi)  
+[Repository structure](##repository-structure)  
+[Requirements](##requirements)  
+[Basic eAPI tutorial](##basic-eapi-tutorial)  
+[Advanced eAPI demo](##advanced-eapi-demo)  
+
 ## About this repo 
 
-This repo has basic examples of Arista EOS automation using eAPI
+This repo has basic examples of Arista EOS automation using eAPI.  
+
+## About eAPI
+
+Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
+eAPI uses JSON-RPC over HTTP. 
+
+## Repository structure 
 
 ## Requirements 
 
@@ -28,7 +43,7 @@ pip freeze | grep jsonrpc
 jsonrpclib-pelix==0.4.1
 ```
 
-## EOS automation using JSON-RPC
+## Basic eAPI tutorial 
 
 ```
 >>> from jsonrpclib import Server
@@ -43,6 +58,8 @@ http://arista:arista@10.83.28.203/command-api
 ```
 
 ### The `runCmds` method
+
+Using the `runCmds` method, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
 
 #### Running a `show command` 
 
@@ -131,7 +148,7 @@ vlan 30 name is thirty
 
 #### Configuring EOS devices using a file 
 
-We will use the file [commands.txt](commands.txt). 
+We will use the file [commands.txt](commands.txt) to create the list of commands to run. 
 
 ```
 >>> f = open("commands.txt", "r")
@@ -156,6 +173,9 @@ vlan 40 name is forty
 ```
 
 ### The `getCommandCompletions` method
+
+The `getCommandCompletions` method can be used to complete a command.  
+This section is fyi only. Use only `runCmds` method. The `runCmds` method supports auto completion as shown above.  
 
 ```
 >>> command_to_complete = "sh"
@@ -188,3 +208,11 @@ show
 {'version': 'Software and hardware versions'}
 >>> 
 ```
+
+## Advanced eAPI demo
+
+### Lab topology
+
+### Demo building blocks
+
+### Run the demo
