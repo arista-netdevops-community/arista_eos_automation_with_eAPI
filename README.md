@@ -229,11 +229,9 @@ show
 
 ## eAPI advanced demo
 
-### lab topology
+### Lab topology
 
-### Run the demo
-
-#### Configure the devices
+### Configure the devices
 
 To generate EOS configuration files and configure the devices, run this command: 
 
@@ -241,14 +239,155 @@ To generate EOS configuration files and configure the devices, run this command:
 python configure_network.py
 ```
 
-#### Audit the devices 
-
-To audit all configured BGP sessions, run this command: 
+Script output example: 
 ```
-audit_network_states.py
+------------------------------------------------------------
+Printing some details regarding the device switch1
+model is DCS-7050SX-64-F
+version is 4.22.1F-INT
+------------------------------------------------------------
+Printing some details regarding the device switch2
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+Printing some details regarding the device switch3
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+Generating the template for device switch1
+The generated device configuration is now saved in the config directory
+------------------------------------------------------------
+Generating the template for device switch2
+The generated device configuration is now saved in the config directory
+------------------------------------------------------------
+Generating the template for device switch3
+The generated device configuration is now saved in the config directory
+------------------------------------------------------------
+configuring the device switch1
+Done
+------------------------------------------------------------
+configuring the device switch2
+Done
+------------------------------------------------------------
+configuring the device switch3
+Done
 ```
 
-To audit only the BGP sessions you configured, run this command: 
+Run this command to see the files generated
+```
+ls config
+```
+
+### Audit the devices 
+
+#### To audit all BGP sessions currently configured on the devices
+
+Run this command: 
+
+```
+python audit_network_states.py
+```
+
+Script output example: 
+```
+------------------------------------------------------------
+Printing some details regarding the device switch1
+model is DCS-7050SX-64-F
+version is 4.22.1F-INT
+------------------------------------------------------------
+Printing some details regarding the device switch2
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+Printing some details regarding the device switch3
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+audit will start in 15 seconds ...
+audit will start in 10 seconds ...
+audit will start in 5 seconds ...
+------------------------------------------------------------
+Auditing all BGP neighbors configured on the device switch1
+i.e we are currently using the device configuration as a SoT
+the BGP session with 10.10.10.1 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.1 is 7
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.1 is 5
+the BGP session with 10.10.10.3 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.3 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.3 is 5
+------------------------------------------------------------
+Auditing all BGP neighbors configured on the device switch2
+i.e we are currently using the device configuration as a SoT
+the BGP session with 10.10.10.0 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.0 is 5
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.0 is 5
+the BGP session with 10.10.10.5 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.5 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.5 is 6
+------------------------------------------------------------
+Auditing all BGP neighbors configured on the device switch3
+i.e we are currently using the device configuration as a SoT
+the BGP session with 10.10.10.2 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.2 is 5
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.2 is 6
+the BGP session with 10.10.10.4 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.4 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.4 is 6
+```
+#### To audit only the BGP sessions you configured 
+
+Run this command: 
 ```
 python audit_desired_states.py
+```
+
+Script output example: 
+```
+------------------------------------------------------------
+Printing some details regarding the device switch1
+model is DCS-7050SX-64-F
+version is 4.22.1F-INT
+------------------------------------------------------------
+Printing some details regarding the device switch2
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+Printing some details regarding the device switch3
+model is DCS-7150S-52-CL-F
+version is 4.22.4M-2GB
+------------------------------------------------------------
+audit will start in 15 seconds ...
+audit will start in 10 seconds ...
+audit will start in 5 seconds ...
+------------------------------------------------------------
+Auditing only the desired BGP neighbors on the device switch1
+i.e we are currently using the device variables as a SoT
+the BGP session with 10.10.10.1 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.1 is 7
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.1 is 5
+the BGP session with 10.10.10.3 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.3 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.3 is 5
+------------------------------------------------------------
+Auditing only the desired BGP neighbors on the device switch2
+i.e we are currently using the device variables as a SoT
+the BGP session with 10.10.10.0 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.0 is 5
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.0 is 5
+the BGP session with 10.10.10.5 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.5 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.5 is 6
+------------------------------------------------------------
+Auditing only the desired BGP neighbors on the device switch3
+i.e we are currently using the device variables as a SoT
+the BGP session with 10.10.10.2 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.2 is 5
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.2 is 6
+the BGP session with 10.10.10.4 is Established
+the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.4 is 6
+the number of IPv4 prefixes received from the BGP neighbor 10.10.10.4 is 6
+```
+To see the commands generated, run this command: 
+```
+ls audit   
 ```
