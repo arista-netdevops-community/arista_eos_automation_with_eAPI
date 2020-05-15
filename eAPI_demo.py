@@ -7,6 +7,23 @@ import time
 username = "arista"
 password = "arista"
 
+# Devices variables 
+inventory_f=open('inventory.yml', 'r')
+inventory_s=inventory_f.read()
+inventory_f.close()
+inventory=yaml.load(inventory_s, Loader=yaml.FullLoader)
+
+# Printing some details regarding the devices
+for device in inventory:
+    print ('-'*60)
+    print ('Printing some details regarding the device ' + device)
+    ip = inventory[device]['ip']
+    url = "http://" + username + ":" + password + "@" + ip + "/command-api"
+    switch = Server(url)
+    result=switch.runCmds(version=1,cmds=["sh ver"], format='json', autoComplete=True)
+    print('model is ' + result[0]['modelName'])
+    print('version is ' + result[0]['version'])
+
 # Template to generate devices configuration 
 f=open('config.j2')
 s=f.read()
@@ -19,12 +36,6 @@ config_directory = os.path.dirname(cwd + "/config/")
 if not os.path.exists(config_directory):
     os.makedirs(config_directory)
 
-# Devices variables 
-inventory_f=open('inventory.yml', 'r')
-inventory_s=inventory_f.read()
-inventory_f.close()
-inventory=yaml.load(inventory_s, Loader=yaml.FullLoader)
-
 # Genrating the devices configuration
 for device in inventory:
     print ('-'*60)
@@ -36,6 +47,7 @@ for device in inventory:
     conf = open(config_directory + '/' + device + '.txt','w')
     conf.write(eos_template.render(vars))
     conf.close()
+    print ('The generated device configuration is now saved in the config directory')
 
 # configuring the devices
 for device in inventory:
@@ -48,6 +60,7 @@ for device in inventory:
     conf_list = f.read().splitlines()
     f.close() 
     conf = switch.runCmds(version=1,cmds=conf_list, autoComplete=True)
+    print ('Done') 
 
 # auditing the devices
 print ('-'*60)
