@@ -1,3 +1,4 @@
+enable 
 conf
 vlan 50
 name fifty

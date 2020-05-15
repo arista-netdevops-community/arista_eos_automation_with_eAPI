@@ -1,3 +1,4 @@
+enable 
 configure 
 hostname switch2
 dns domain lab.local 

@@ -116,7 +116,7 @@ Using the `runCmds` method, an application can send a list of EOS commands (both
 #### Configuring EOS with a list of several commands
 
 ```
->>> conf = ["configure", "vlan 10", "name ten"]
+>>> conf = ["enable", "configure", "vlan 10", "name ten"]
 >>> conf_vlan_10 = switch.runCmds(version=1,cmds=conf)
 >>> result=switch.runCmds(version=1,cmds=["show vlan"])
 >>> result[0]['vlans']['10']['name']
@@ -124,7 +124,7 @@ Using the `runCmds` method, an application can send a list of EOS commands (both
 >>> 
 ```
 ```
->>> conf = ["configure", "vlan 20", "name twenty", "vlan 30", "name thirty"] 
+>>> conf = ["enable", "configure", "vlan 20", "name twenty", "vlan 30", "name thirty"] 
 >>> conf_vlans = switch.runCmds(version=1,cmds=conf)
 >>> result=switch.runCmds(version=1,cmds=["show vlan"], format='json')
 >>> for key,value in result[0]['vlans'].items(): 
@@ -140,7 +140,7 @@ vlan 30 name is thirty
 #### Configuring EOS using auto completion 
 
 ```
->>> conf = ["conf", "vla 40", "nam forty"] 
+>>> conf = ["enable", "conf", "vla 40", "nam forty"] 
 >>> conf_vlan_101 = switch.runCmds(version=1,cmds=conf, autoComplete=True)
 >>> result=switch.runCmds(version=1,cmds=["sh vla"], format='json', autoComplete=True)
 >>> result[0]['vlans']['40']['name']
@@ -157,7 +157,7 @@ We will use the file [commands.txt](commands.txt) to create the list of commands
 >>> conf = f.read().splitlines()
 >>> f.close() 
 >>> conf
-['conf', 'vlan 50', 'name fifty', 'vlan 60 ', 'name sixty']
+['enable', 'conf', 'vlan 50', 'name fifty', 'vlan 60 ', 'name sixty']
 >>> 
 >>> conf_vlans = switch.runCmds(version=1,cmds=conf, autoComplete=True)
 >>> result=switch.runCmds(version=1,cmds=["sh vlan"], format='json', autoComplete=True)
