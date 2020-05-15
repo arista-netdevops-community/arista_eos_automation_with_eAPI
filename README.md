@@ -231,6 +231,11 @@ show
 
 ### Lab topology
 
+3 EOS devices connected in a triangle topology.  
+We will use eAPI to configure the devices (EBGP and interfaces) and to audit them.  
+
+![topology.png](topology.png)
+
 ### Configure the devices
 
 To generate EOS configuration files and configure the devices, run this command: 
