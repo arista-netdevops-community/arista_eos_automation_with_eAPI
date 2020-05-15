@@ -6,7 +6,7 @@
 [Requirements](#requirements)  
 [Repository structure](#repository-structure)  
 [Basic eAPI tutorial](#basic-eapi-tutorial)  
-[eAPI demo](#eapi-demo)  
+[eAPI advanced demo](#eapi-advanced-demo)  
 
 ## About this repository 
 
@@ -51,8 +51,10 @@ jsonrpclib-pelix==0.4.1
 - The variables are defined in the [host_vars](host_vars) directory 
 - The directory [templates](templates) has the templates
 - The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
-- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
-- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states   
+- The directory [audit](audit) has the EOS show commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. We reuse the same variables we used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
+- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states. It runs two sorts of audits: 
+  - it uses the devices configuration as a SoT. It audits all the configured BGP neigbhors
+  - it uses the devices variables as a SoT. It audits only the desired BGP neighbors (the ones described in the variables in the [host_vars](host_vars) directory)  
 - The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
 ## Basic eAPI tutorial 
@@ -223,7 +225,7 @@ show
 >>> 
 ```
 
-## eAPI demo
+## eAPI advanced demo
 
 ### About the demo 
 
