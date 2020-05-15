@@ -1,0 +1,10 @@
+---
+switch1:
+    ip: 10.83.28.211
+    vars: host_vars/switch1.yml
+switch2: 
+    ip: 10.83.28.212
+    vars: host_vars/switch2.yml
+switch3: 
+    ip: 10.83.28.203
+    vars: host_vars/switch3.yml
