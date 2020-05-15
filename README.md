@@ -3,8 +3,8 @@
 ## Table of content
 [About this repository](#about-this-repository)  
 [About eAPI](#about-eapi)  
-[Repository structure](#repository-structure)  
 [Requirements](#requirements)  
+[Repository structure](#repository-structure)  
 [Basic eAPI tutorial](#basic-eapi-tutorial)  
 [Advanced eAPI demo](#advanced-eapi-demo)  
 
@@ -16,8 +16,6 @@ This repo has basic examples of Arista EOS automation using eAPI.
 
 Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
 eAPI uses JSON-RPC over HTTP. 
-
-## Repository structure 
 
 ## Requirements 
 
@@ -44,6 +42,15 @@ pip install jsonrpclib-pelix
 pip freeze | grep jsonrpc
 jsonrpclib-pelix==0.4.1
 ```
+
+## Repository structure 
+
+- The inventory file is [inventory.yml](inventory.yml)
+- The variables are defined in the [host_vars](host_vars) directories 
+- The file [config.j2](config.j2) is a template used to generate devices configuration   
+- The directory [config](config) has the devices configuration generated from the template [config.j2](config.j2) 
+- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](config.j2), and uses eAPI to configure the devices and to audit the devices states   
+- The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
 ## Basic eAPI tutorial 
 
