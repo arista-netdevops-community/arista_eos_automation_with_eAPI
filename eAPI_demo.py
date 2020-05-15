@@ -7,7 +7,7 @@ import time
 username = "arista"
 password = "arista"
 
-# Devices variables 
+# Devices inventory 
 inventory_f=open('inventory.yml', 'r')
 inventory_s=inventory_f.read()
 inventory_f.close()
@@ -25,12 +25,12 @@ for device in inventory:
     print('version is ' + result[0]['version'])
 
 # Template to generate devices configuration 
-f=open('config.j2')
+f=open('templates/config.j2')
 s=f.read()
 f.close()
 eos_template=Template(s)
 
-# Directory to save devices configuration 
+# Directory to save the generated devices configuration 
 cwd = os.getcwd()
 config_directory = os.path.dirname(cwd + "/config/")
 if not os.path.exists(config_directory):
@@ -67,14 +67,21 @@ print ('-'*60)
 print ('audit will start in 15 seconds')
 time.sleep(15)
 
+# auditing all BGP neigbors configured on all the devices (i.e we use the devices configuration as a SoT) 
 for device in inventory:
     print ('-'*60)
-    print ('Auditing the device ' + device)
+    print ('Auditing all BGP neighbors configured on the device ' + device)
     ip = inventory[device]['ip']
     url = "http://" + username + ":" + password + "@" + ip + "/command-api"
     switch = Server(url)
-    result=switch.runCmds(version=1,cmds=["sh ver"], format='json', autoComplete=True)
-    print(result[0]['modelName'])
+    result=switch.runCmds(version=1,cmds=["show ip bgp neighbors"])
+    for item in result[0]['vrfs']['default']['peerList']:  
+        print ("the BGP session with " + item['peerAddress'] + " is " + item['state'])
+        print ("the number of IPv4 prefixes sent to the BGP neighbor " + item['peerAddress'] + " is " + str(item['prefixesSent']))
+        print ("the number of IPv4 prefixes received from the BGP neighbor " + item['peerAddress'] + " is " + str(item['prefixesReceived']))
+
+
+
 
 
 

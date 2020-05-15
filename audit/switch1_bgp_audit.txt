@@ -1,0 +1,5 @@
+ 
+show ip bgp neighbors 10.10.10.1 
+ 
+show ip bgp neighbors 10.10.10.3 
+ 

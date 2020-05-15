@@ -46,9 +46,10 @@ jsonrpclib-pelix==0.4.1
 ## Repository structure 
 
 - The inventory file is [inventory.yml](inventory.yml)
-- The variables are defined in the [host_vars](host_vars) directories 
-- The file [config.j2](config.j2) is a template used to generate devices configuration   
-- The directory [config](config) has the devices configuration generated from the template [config.j2](config.j2) 
+- The variables are defined in the [host_vars](host_vars) directory 
+- The directory [templates](templates) has the templates
+- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
+- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
 - The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](config.j2), and uses eAPI to configure the devices and to audit the devices states   
 - The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
