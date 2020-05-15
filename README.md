@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/ksator/arista_eos_automation_with_eAPI)   
+ 
 ## Table of content
 
 [About eAPI](#about-eapi)  
