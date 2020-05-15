@@ -1,12 +1,12 @@
 ![GitHub](https://img.shields.io/github/license/ksator/arista_eos_automation_with_eAPI)   
 
 ## Table of content
-[About this repository](##about-this-repository)  
-[About eAPI](##about-eapi)  
-[Repository structure](##repository-structure)  
-[Requirements](##requirements)  
-[Basic eAPI tutorial](##basic-eapi-tutorial)  
-[Advanced eAPI demo](##advanced-eapi-demo)  
+[About this repository](#about-this-repository)  
+[About eAPI](#about-eapi)  
+[Repository structure](#repository-structure)  
+[Requirements](#requirements)  
+[Basic eAPI tutorial](#basic-eapi-tutorial)  
+[Advanced eAPI demo](#advanced-eapi-demo)  
 
 ## About this repo 
 
