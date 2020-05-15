@@ -1,0 +1,21 @@
+hostname: switch2
+domain_name: "lab.local"
+loopback: 172.16.0.2 
+as: 65002
+topology:
+  - interface: Ethernet21
+    lldp_neighbor: switch1
+    lldp_neighbor_interface: Ethernet21
+    ip: 10.10.10.1
+    subnet: 31
+    ebgp_peer_ip: 10.10.10.0
+    ebgp_peer_loopback: 172.16.0.1 
+    ebgp_peer_as: 65001
+  - interface: Ethernet24
+    lldp_neighbor: switch3
+    lldp_neighbor_interface: Ethernet24
+    ip: 10.10.10.4
+    subnet: 31
+    ebgp_peer_ip: 10.10.10.5
+    ebgp_peer_loopback:  172.16.0.3
+    ebgp_peer_as: 65003
