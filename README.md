@@ -11,11 +11,13 @@
 ## About this repository 
 
 This repo has basic examples of Arista EOS automation using eAPI.  
+This includes devices configuration and devices states audit.  
 
 ## About eAPI
 
 Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
-eAPI uses JSON-RPC over HTTP. 
+eAPI uses JSON-RPC over HTTP.  
+So the devices reply using a JSON representation of the show commands which make devices states auditing easy.  
 
 ## Requirements 
 
@@ -49,8 +51,8 @@ jsonrpclib-pelix==0.4.1
 - The variables are defined in the [host_vars](host_vars) directory 
 - The directory [templates](templates) has the templates
 - The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
-- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
-- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](config.j2), and uses eAPI to configure the devices and to audit the devices states   
+- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
+- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states   
 - The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
 ## Basic eAPI tutorial 
@@ -226,19 +228,23 @@ show
 ### About the demo 
 
 The python script [eAPI_demo.py](eAPI_demo.py):  
-- generates EOS configuration files from the template [config.j2](config.j2). This includes interfaces configuration and EBGP configuration.  
+- generates EOS configuration files from the template [config.j2](config.j2) and the variables in the [host_vars](host_vars) directory. This includes interfaces configuration and EBGP configuration. The generated configuration files are saved in the directory [config](config) 
 - uses eAPI to configure the devices 
-- uses eAPI to audit the devices states. This includes interfaces and BGP states. 
-
+- uses eAPI to audit the BGP states. This scripts runs two sort of audits:   
+  - it uses the device configuration as a SoT. It audits all the configured BGP neigbhors
+  - it uses the device variables as a SoT. It audits only the desired BGP neighbors. To audit only the desired BGP neighbors,  it generates EOS show commands from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory and save these show commands in the directory [audit](audit). So to audit only the desired BGP neighbors, we reuse the same variables we used to generate the configuration files.
+    
 ### Lab topology
 
 ### Demo building blocks  
 
 - The inventory file is [inventory.yml](inventory.yml)
-- The variables are defined in the [host_vars](host_vars) directories 
-- The file [config.j2](config.j2) is a template used to generate devices configuration   
-- The directory [config](config) has the devices configuration generated from the template [config.j2](config.j2) 
-- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](config.j2), and uses eAPI to configure the devices and to audit the devices states   
+- The variables are defined in the [host_vars](host_vars) directory 
+- The directory [templates](templates) has the templates
+- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
+- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
+- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states   
+
 
 ### Run the demo
 
