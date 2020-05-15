@@ -1,5 +1,6 @@
-hostname {{ inventory_hostname }}
-ip domain-name {{ domain_name }} 
+configure 
+hostname {{ hostname }}
+dns domain {{ domain_name }} 
 {% for item in topology %} 
 interface {{ item.interface }}
     no shutdown
@@ -12,5 +13,5 @@ interface Loopback0
 router bgp {{ as }}
     redistribute connected
 {% for item in topology %} 
-    neighbor {{ item.ebgp_peer_ip }} remote-as {{ item.ebgp_peer_as'] }}
+    neighbor {{ item.ebgp_peer_ip }} remote-as {{ item.ebgp_peer_as }}
 {% endfor %}
