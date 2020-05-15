@@ -240,5 +240,5 @@ The python script [eAPI_demo.py](eAPI_demo.py):
 ### Run the demo
 
 ```
-python eAPI_demo.py. 
+python eAPI_demo.py 
 ```
