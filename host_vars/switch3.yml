@@ -3,9 +3,9 @@ domain_name: "lab.local"
 loopback: 172.16.0.3 
 as: 65003
 topology:
-  - interface: Ethernet2
+  - interface: Ethernet4
     lldp_neighbor: switch1
-    lldp_neighbor_interface: Ethernet4
+    lldp_neighbor_interface: Ethernet2
     ip: 10.10.10.3
     subnet: 31
     ebgp_peer_ip: 10.10.10.2

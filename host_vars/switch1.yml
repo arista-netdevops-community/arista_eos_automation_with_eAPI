@@ -3,17 +3,17 @@ domain_name: "lab.local"
 loopback: 172.16.0.1
 as: 65001
 topology:
-  - interface: Ethernet21
+  - interface: Ethernet1
     lldp_neighbor: switch2
-    lldp_neighbor_interface: Ethernet21
+    lldp_neighbor_interface: Ethernet4
     ip: 10.10.10.0
     subnet: 31
     ebgp_peer_ip: 10.10.10.1
     ebgp_peer_loopback: 172.16.0.2 
     ebgp_peer_as: 65002
-  - interface: Ethernet4
+  - interface: Ethernet2
     lldp_neighbor: switch3
-    lldp_neighbor_interface: Ethernet2
+    lldp_neighbor_interface: Ethernet4
     ip: 10.10.10.2
     subnet: 31
     ebgp_peer_ip: 10.10.10.3

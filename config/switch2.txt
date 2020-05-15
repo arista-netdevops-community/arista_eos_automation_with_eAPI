@@ -3,9 +3,9 @@ configure
 hostname switch2
 dns domain lab.local 
  
-interface Ethernet21
+interface Ethernet4
     no shutdown
-    description "switch1 **** Ethernet21"
+    description "switch1 **** Ethernet1"
     no switchport
     ip address 10.10.10.1/31
  
