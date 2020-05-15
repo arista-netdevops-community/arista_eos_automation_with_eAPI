@@ -50,11 +50,13 @@ jsonrpclib-pelix==0.4.1
 - The inventory file is [inventory.yml](inventory.yml)
 - The variables are defined in the [host_vars](host_vars) directory 
 - The directory [templates](templates) has the templates
-- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
+  - [config.j2](templates/config.j2) is a template to generate configuration files
+  - [audit.j2](templates/bgp_audit.j2) is a template to generate EOS show commands to validate the desirated states on remote devices. 
+- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory. we use eAPI to configure the devices.   
 - The directory [audit](audit) has the EOS show commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. We reuse the same variables we used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
-- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states. It runs two sorts of audits: 
-  - it uses the devices configuration as a SoT. It audits all the configured BGP neigbhors
-  - it uses the devices variables as a SoT. It audits only the desired BGP neighbors (the ones described in the variables in the [host_vars](host_vars) directory)  
+- The file [configure_network.py](configure_network.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices
+- The file [audit_network_states.py](audit_network_states.py) audits **all** the configured BGP neigbhors. It uses the devices configuration as a SoT. 
+- The file [audit_desired_states.py](audit_desired_states.py) audits **only** the BGP neighbors you configured (the ones described in the variables in the [host_vars](host_vars) directory)the devices states. It uses the devices variables as a SoT. To audit only these BGP neighbors, it generates EOS show commands from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory and save these show commands in the directory [audit](audit). So to audit only these BGP neighbors, we reuse the same variables we used to generate the configuration files.
 - The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
 ## Basic eAPI tutorial 
@@ -227,29 +229,26 @@ show
 
 ## eAPI advanced demo
 
-### About the demo 
-
-The python script [eAPI_demo.py](eAPI_demo.py):  
-- generates EOS configuration files from the template [config.j2](config.j2) and the variables in the [host_vars](host_vars) directory. This includes interfaces configuration and EBGP configuration. The generated configuration files are saved in the directory [config](config) 
-- uses eAPI to configure the devices 
-- uses eAPI to audit the BGP states. This scripts runs two sort of audits:   
-  - it uses the device configuration as a SoT. It audits all the configured BGP neigbhors
-  - it uses the device variables as a SoT. It audits only the desired BGP neighbors. To audit only the desired BGP neighbors,  it generates EOS show commands from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory and save these show commands in the directory [audit](audit). So to audit only the desired BGP neighbors, we reuse the same variables we used to generate the configuration files.
-    
-### Lab topology
-
-### Demo building blocks  
-
-- The inventory file is [inventory.yml](inventory.yml)
-- The variables are defined in the [host_vars](host_vars) directory 
-- The directory [templates](templates) has the templates
-- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory 
-- The directory [audit](audit) has the EOS commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. So to audit the devices, we reuse the same variables we already used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
-- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices and to audit the devices states   
-
+### lab topology
 
 ### Run the demo
 
+#### Configure the devices
+
+To generate EOS configuration files and configure the devices, run this command: 
+
 ```
-python eAPI_demo.py 
+python configure_network.py
+```
+
+#### Audit the devices 
+
+To audit all configured BGP sessions, run this command: 
+```
+audit_network_states.py
+```
+
+To audit only the BGP sessions you configured, run this command: 
+```
+python audit_desired_states.py
 ```
