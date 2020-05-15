@@ -6,7 +6,7 @@
 [Requirements](#requirements)  
 [Repository structure](#repository-structure)  
 [Basic eAPI tutorial](#basic-eapi-tutorial)  
-[Advanced eAPI demo](#advanced-eapi-demo)  
+[eAPI demo](#eapi-demo)  
 
 ## About this repository 
 
@@ -220,7 +220,9 @@ show
 >>> 
 ```
 
-## Advanced eAPI demo
+## eAPI demo
+
+### About the demo 
 
 The python script [eAPI_demo.py](eAPI_demo.py):  
 - generates EOS configuration files from the template [config.j2](config.j2). This includes interfaces configuration and EBGP configuration.  
