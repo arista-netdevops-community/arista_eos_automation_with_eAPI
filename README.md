@@ -54,6 +54,8 @@ jsonrpclib-pelix==0.4.1
 
 ## Basic eAPI tutorial 
 
+We will use a Python interactive session for this tutorial  
+
 ```
 >>> from jsonrpclib import Server
 >>> from pprint import pprint as pp
@@ -220,8 +222,23 @@ show
 
 ## Advanced eAPI demo
 
+The python script [eAPI_demo.py](eAPI_demo.py):  
+- generates EOS configuration files from the template [config.j2](config.j2). This includes interfaces configuration and EBGP configuration.  
+- uses eAPI to configure the devices 
+- uses eAPI to audit the devices states. This includes interfaces and BGP states. 
+
 ### Lab topology
 
-### Demo building blocks
+### Demo building blocks  
+
+- The inventory file is [inventory.yml](inventory.yml)
+- The variables are defined in the [host_vars](host_vars) directories 
+- The file [config.j2](config.j2) is a template used to generate devices configuration   
+- The directory [config](config) has the devices configuration generated from the template [config.j2](config.j2) 
+- The file [eAPI_demo.py](eAPI_demo.py) generates EOS configuration files from the template [config.j2](config.j2), and uses eAPI to configure the devices and to audit the devices states   
 
 ### Run the demo
+
+```
+python eAPI_demo.py. 
+```
