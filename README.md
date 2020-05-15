@@ -44,7 +44,7 @@ http://arista:arista@10.83.28.203/command-api
 
 ### The `runCmds` method
 
-#### Running an EOS `show command` 
+#### Running a `show command` 
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["show version"])
@@ -71,7 +71,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-#### Running an EOS `show command` using auto completion
+#### Running a `show command` using auto completion
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["sh ver"], format='json', autoComplete=True)
@@ -82,7 +82,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-#### Running several EOS `show commands` 
+#### Running a list of several `show commands` 
 
 ```
 >>> commands_list = ["sh env temp", "sh ver"]
@@ -94,7 +94,7 @@ http://arista:arista@10.83.28.203/command-api
 >>> 
 ```
 
-#### Configuring EOS 
+#### Configuring EOS with a list of several commands
 
 ```
 >>> conf = ["configure", "vlan 10", "name ten"]
