@@ -1,23 +1,26 @@
 ![GitHub](https://img.shields.io/github/license/ksator/arista_eos_automation_with_eAPI)   
 
 ## Table of content
-[About this repository](#about-this-repository)  
+
 [About eAPI](#about-eapi)  
+[About this repository](#about-this-repository)  
 [Requirements](#requirements)  
 [Repository structure](#repository-structure)  
 [Basic eAPI tutorial](#basic-eapi-tutorial)  
 [eAPI advanced demo](#eapi-advanced-demo)  
 
-## About this repository 
-
-This repo has basic examples of Arista EOS automation using eAPI.  
-This includes devices configuration and devices states audit.  
-
 ## About eAPI
 
-Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
 eAPI uses JSON-RPC over HTTP.  
-So the devices reply using a JSON representation of the show commands which make devices states auditing easy.  
+
+Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
+The devices reply using a JSON representation of the show commands which make devices states auditing easy.  
+
+## About this repository 
+
+This repo has examples of Arista EOS automation using eAPI.  
+This includes devices configuration and devices states audit.  
+We will also see how eAPI can use files (generated from templates) to configure and audit devices instead of using hardcoded python lists of commands.  
 
 ## Requirements 
 
