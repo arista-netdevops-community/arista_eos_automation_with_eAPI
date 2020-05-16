@@ -1,0 +1,25 @@
+2020-05-17 00:20:45.777337
+------------------------------------------------------------
+Auditing device switch1
+Ethernet1: admin status is up, op status is up
+Ethernet2: admin status is up, op status is up
+Ethernet1: lldp neighbor is switch2.lab.local, lldp remote port is Ethernet4
+Ethernet2: lldp neighbor is switch3.lab.local, lldp remote port is Ethernet4
+BGP session with 10.10.10.1 is Established
+BGP session with 10.10.10.3 is Established
+------------------------------------------------------------
+Auditing device switch2
+Ethernet4: admin status is up, op status is up
+Ethernet24: admin status is up, op status is up
+Ethernet4: lldp neighbor is switch1.lab.local, lldp remote port is Ethernet1
+Ethernet24: lldp neighbor is switch3.lab.local, lldp remote port is Ethernet24
+BGP session with 10.10.10.0 is Established
+BGP session with 10.10.10.5 is Established
+------------------------------------------------------------
+Auditing device switch3
+Ethernet4: admin status is up, op status is up
+Ethernet24: admin status is up, op status is up
+Ethernet4: lldp neighbor is switch1.lab.local, lldp remote port is Ethernet2
+Ethernet24: lldp neighbor is switch2.lab.local, lldp remote port is Ethernet24
+BGP session with 10.10.10.2 is Established
+BGP session with 10.10.10.4 is Established
