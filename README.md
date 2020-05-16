@@ -14,13 +14,13 @@
 eAPI uses JSON-RPC over HTTP.  
 
 Using eAPI, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
-The devices reply using a JSON representation of the show commands which make devices states auditing easy.  
+The devices reply using a JSON representation of the show commands which make devices states programmatic audit easy.  
 
 ## About this repository 
 
 This repo has examples of Arista EOS automation using eAPI.  
 This includes devices configuration and devices states audit.  
-We will also see how eAPI can use files (generated from templates) to configure and audit devices instead of using hardcoded python lists of commands.  
+We will also see how eAPI can use text files (generated from templates) to configure and audit devices instead of using hardcoded python lists of commands.  
 
 ## Requirements 
 
@@ -53,13 +53,13 @@ jsonrpclib-pelix==0.4.1
 - The inventory file is [inventory.yml](inventory.yml)
 - The variables are defined in the [host_vars](host_vars) directory 
 - The directory [templates](templates) has the templates
-  - [config.j2](templates/config.j2) is a template to generate configuration files
-  - [audit.j2](templates/bgp_audit.j2) is a template to generate EOS show commands to validate the desirated states on remote devices. 
-- The directory [config](config) has the devices configuration generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory. we use eAPI to configure the devices.   
+  - [config.j2](templates/config.j2) is a template to generate EOS configuration files
+  - [bgp_audit.j2](templates/bgp_audit.j2) is a template to generate the EOS show commands to validate the desired states on EOS devices. 
+- The directory [config](config) has the devices configuration files generated from the template [config.j2](templates/config.j2) and the variables in [host_vars](host_vars) directory. we use eAPI to configure the devices.   
 - The directory [audit](audit) has the EOS show commands generated from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory. We reuse the same variables we used to generate the configuration files. To get the devices states, we use eAPI to run these show commands and parse the output. 
-- The file [configure_network.py](configure_network.py) generates EOS configuration files from the template [config.j2](templates/config.j2), and uses eAPI to configure the devices
-- The file [audit_network_states.py](audit_network_states.py) audits **all** the configured BGP neigbhors. It uses the devices configuration as a SoT. 
-- The file [audit_desired_states.py](audit_desired_states.py) audits **only** the BGP neighbors you configured (the ones described in the variables in the [host_vars](host_vars) directory)the devices states. It uses the devices variables as a SoT. To audit only these BGP neighbors, it generates EOS show commands from the template [audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory and save these show commands in the directory [audit](audit). So to audit only these BGP neighbors, we reuse the same variables we used to generate the configuration files.
+- The file [configure_network.py](configure_network.py) generates EOS configuration files from the template [config.j2](templates/config.j2), converts the generated configuration files into lists of configuration commands, and uses eAPI to configure the devices using these lists of configuration commands.
+- The file [audit_all_states.py](audit_all_states.py) audits **all** the configured BGP neigbhors. It uses the devices configuration as a SoT. 
+- The file [audit_desired_states.py](audit_desired_states.py) audits **only** the BGP neighbors you configured (the ones described in the variables in the [host_vars](host_vars) directory). It uses the devices variables as a SoT instead of using the devices configuration as a SoT. To audit only the BGP neighbors you configured, it generates EOS show commands from the template [bgp_audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory, and save these show commands in the directory [audit](audit). Then it converts the generated text files into lists of show commands, and uses eAPI to audit these BGP neighbors. So to audit only the BGP neighbors you configured, we reuse the same variables we used to generate the configuration files.
 - The file [commands.txt](commands.txt) is used for the basic [basic eAPI tutorial](#basic-eapi-tutorial) 
 
 ## Basic eAPI tutorial 
@@ -82,7 +82,7 @@ http://arista:arista@10.83.28.203/command-api
 
 Using the `runCmds` method, an application can send a list of EOS commands (both show commands and configuration commands) to EOS devices.  
 
-#### Running a `show command` 
+#### Running a show command
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["show version"])
@@ -109,7 +109,7 @@ Using the `runCmds` method, an application can send a list of EOS commands (both
 >>> 
 ```
 
-#### Running a `show command` using auto completion
+#### Running a show command using auto completion
 
 ```
 >>> result=switch.runCmds(version=1,cmds=["sh ver"], format='json', autoComplete=True)
@@ -120,7 +120,7 @@ Using the `runCmds` method, an application can send a list of EOS commands (both
 >>> 
 ```
 
-#### Running a list of several `show commands` 
+#### Running a list of several show commands
 
 ```
 >>> commands_list = ["sh env temp", "sh ver"]
@@ -169,8 +169,9 @@ vlan 30 name is thirty
 
 #### Configuring EOS devices using a file 
 
-We will use the file [commands.txt](commands.txt) to create the list of commands to run. 
-
+We will create a list of commands from the file [commands.txt](commands.txt).  
+Then we will use eAPI to run these commands.  
+ 
 ```
 >>> f = open("commands.txt", "r")
 >>> conf = f.read().splitlines()
@@ -241,13 +242,13 @@ We will use eAPI to configure the devices (EBGP and interfaces) and to audit the
 
 ### Configure the devices
 
-To generate EOS configuration files and configure the devices, run this command: 
+The file [configure_network.py](configure_network.py) generates EOS configuration files from the template [config.j2](templates/config.j2), converts the generated configuration files into lists of configuration commands, and uses eAPI to configure the devices using these lists of configuration commands.
 
 ```
 python configure_network.py
 ```
 
-Script output example: 
+Script output: 
 ```
 ------------------------------------------------------------
 Printing some details regarding the device switch1
@@ -288,15 +289,15 @@ ls config
 
 ### Audit the devices 
 
-#### To audit all BGP sessions currently configured on the devices
+#### Audit all BGP sessions currently configured on the devices
 
-Run this command: 
+The file [audit_all_states.py](audit_all_states.py) audits **all** the configured BGP neigbhors. It uses the devices configuration as a SoT. 
 
 ```
-python audit_network_states.py
+python audit_all_states.py
 ```
 
-Script output example: 
+Script output: 
 ```
 ------------------------------------------------------------
 Printing some details regarding the device switch1
@@ -342,14 +343,15 @@ the BGP session with 10.10.10.4 is Established
 the number of IPv4 prefixes sent to the BGP neighbor 10.10.10.4 is 6
 the number of IPv4 prefixes received from the BGP neighbor 10.10.10.4 is 6
 ```
-#### To audit only the BGP sessions you configured 
+#### Audit only the BGP sessions you configured 
 
-Run this command: 
+The file [audit_desired_states.py](audit_desired_states.py) audits **only** the BGP neighbors you configured (the ones described in the variables in the [host_vars](host_vars) directory). It uses the devices variables as a SoT instead of using the devices configuration as a SoT. To audit only the BGP neighbors you configured, it generates EOS show commands from the template [bgp_audit.j2](templates/bgp_audit.j2) and the variables in the [host_vars](host_vars) directory, and save these show commands in the directory [audit](audit). Then it converts the generated text files into lists of show commands, and uses eAPI to audit these BGP neighbors. So to audit only the BGP neighbors you configured, we reuse the same variables we used to generate the configuration files.
+
 ```
 python audit_desired_states.py
 ```
 
-Script output example: 
+Script output: 
 ```
 ------------------------------------------------------------
 Printing some details regarding the device switch1

@@ -2,4 +2,3 @@
 show ip bgp neighbors 10.10.10.0 
  
 show ip bgp neighbors 10.10.10.5 
- 

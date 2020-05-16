@@ -33,7 +33,7 @@ time.sleep(5)
 print ('audit will start in 5 seconds ...')
 time.sleep(5)
 
-# auditing only the desired BGP neigbhors on all the devices (i.e we use the devices variables as a SoT) 
+# auditing only the desired BGP neigbhors (i.e we use the devices variables as a SoT) 
 for device in inventory:
     print ('-'*60)
     print ('Auditing only the desired BGP neighbors on the device ' + device)
@@ -64,8 +64,4 @@ for device in inventory:
         print ("the BGP session with " + item['vrfs']['default']['peerList'][0]['peerAddress'] + " is " + item['vrfs']['default']['peerList'][0]['state'])
         print ("the number of IPv4 prefixes sent to the BGP neighbor " + item['vrfs']['default']['peerList'][0]['peerAddress'] + " is " + str(item['vrfs']['default']['peerList'][0]['prefixesSent']))
         print ("the number of IPv4 prefixes received from the BGP neighbor " + item['vrfs']['default']['peerList'][0]['peerAddress'] + " is " + str(item['vrfs']['default']['peerList'][0]['prefixesReceived']))
-
-
-
-
 
