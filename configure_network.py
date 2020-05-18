@@ -39,7 +39,7 @@ if not os.path.exists(config_directory):
 # Genrating the devices configuration
 for device in inventory:
     print ('-'*60)
-    print ('Generating the template for device ' + device)
+    print ('Generating the configuration for device ' + device)
     f=open(inventory[device]['vars'])
     s=f.read()
     f.close()
