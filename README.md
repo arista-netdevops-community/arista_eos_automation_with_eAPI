@@ -265,13 +265,13 @@ Printing some details regarding the device switch3
 model is DCS-7150S-52-CL-F
 version is 4.22.4M-2GB
 ------------------------------------------------------------
-Generating the template for device switch1
+Generating the configuration for device switch1
 The generated device configuration is now saved in the config directory
 ------------------------------------------------------------
-Generating the template for device switch2
+Generating the configuration for device switch2
 The generated device configuration is now saved in the config directory
 ------------------------------------------------------------
-Generating the template for device switch3
+Generating the configuration for device switch3
 The generated device configuration is now saved in the config directory
 ------------------------------------------------------------
 configuring the device switch1
